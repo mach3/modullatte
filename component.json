@@ -1,0 +1,11 @@
+{
+	"name" : "modullatte",
+	"version" : "1.0.0",
+	"main" : [
+		"tasks/modullatte.js",
+		"lib/modullatte.js"
+	],
+	"dependencies" : {
+		"js-beautify" : "einars/js-beautify"
+	}
+}
