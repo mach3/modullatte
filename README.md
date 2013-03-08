@@ -20,9 +20,56 @@ Gruntタスクとして利用できます。
 npm install modullatte
 ```
 
-## Gruntタスクの例
+## HTMLモジュールの例
+
+次のようにファイルが配置されていると想定します。
 
 ```
+root/
+├ public_html/
+│ ├ modules/
+│ │ ├ navi.html
+│ │ └ ...
+│ ├ index.html
+│ └ ...
+└ Gruntfiles.js
+```
+
+### モジュールを読み込む
+
+- navi.html 
+
+```html
+<ul>
+	<li><a href="../foo.html">foo</a></li>
+	...
+</ul>
+```
+
+- index.html
+
+```html
+<!-- #module "./modules/navi.html" -->
+<!-- /#module -->
+```
+
+index.htmlに対してModullatteを実行すると、次のように展開されます。
+
+```html
+<!-- #module "./modules/navi.html" -->
+<ul>
+	<li><a href="foo.html">foo</a></li>
+	...
+</ul>
+<!-- /#module -->
+```
+
+モジュールを編集したら、再度Modullatteを実行すればHTMLが更新されます。
+
+
+## Gruntタスクの例
+
+```javascript
 grunt.loadNpmTasks("modullatte");
 
 grunt.initConfig({
@@ -49,24 +96,19 @@ grunt.initConfig({
 "beautify" 以外の全てのオプションは [js-beautify](https://github.com/einars/js-beautify) のbeautify-html.jsへ渡す為のオプションです。
 個人的な好みにより、インデントの初期値だけ違います。
 
-### beautify : Boolean (true)
-
-HTMLの整形を行う/行わない
-
-### indent_size : Integer (1)
-### indent_char : String ("\t")
-### max_char : Integer (250)
-### brace_style : String ("collapse") - "collapse" | "expand" | "end-expand"
-### indent_scripts : String ("normal") - "keep"|"separate"|"normal"
-
+- beautify : Boolean (true) - HTMLの整形を行う・行わない
+- indent_size : Integer (1)
+- indent_char : String ("\t")
+- max_char : Integer (250)
+- brace_style : String ("collapse") - "collapse" | "expand" | "end-expand"
+- indent_scripts : String ("normal") - "keep"|"separate"|"normal"
 
 ## Grunt以外で使う例
 
 ライブラリを利用して使う場合はファイルの上書きは行われません。
 変わりに、生成した結果のHTML文字列が返されます。
 
-
-```
+```javascript
 var modullatte = require("modullatte");
 
 var result = modullatte.build("./the/path/to/file.html", {
