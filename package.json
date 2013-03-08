@@ -1,0 +1,27 @@
+{
+  "name": "modullatte",
+  "version": "1.0.0",
+  "description": "Simple HTML module tool",
+  "main": "./lib/modullatte.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mach3/modullatte.git"
+  },
+  "keywords": [
+    "HTML",
+    "template",
+    "module"
+  ],
+  "author": {
+    "name": "mach3",
+    "url": "http://www.mach3.jp"
+  },
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}
