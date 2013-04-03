@@ -1,6 +1,6 @@
 {
   "name": "modullatte",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple HTML module tool",
   "main": "./lib/modullatte.js",
   "directories": {

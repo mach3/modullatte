@@ -19,7 +19,7 @@ module.exports = function(grunt){
 			done = this.async();
 			data = this.data;
 			options = this.options({
-				beautify : true,
+				beautify : false,
 				indent_size : 1,
 				indent_char : "\t",
 				max_char : 250,

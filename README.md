@@ -1,7 +1,7 @@
 
 # Modullatte
 
-version 1.0.0
+version 1.0.1
 
 ## これはなに
 
@@ -12,7 +12,8 @@ Gruntタスクとして利用できます。
 
 - #module コメントで括られた箇所に、該当するモジュールHTMLを読み込みこんで保存します
 - モジュール内の相対パスを書き換えます
-- 仕上げにHTMLを自動整形します（ [einars/js-beautify](https://github.com/einars/js-beautify) )
+- 仕上げにHTMLを自動整形するオプションがあります（ [einars/js-beautify](https://github.com/einars/js-beautify) )
+- 自動整形のオプションがオフの場合は、インデントのみあわせて挿入します
 
 ## インストール
 
@@ -96,7 +97,7 @@ grunt.initConfig({
 "beautify" 以外の全てのオプションは [js-beautify](https://github.com/einars/js-beautify) のbeautify-html.jsへ渡す為のオプションです。
 個人的な好みにより、インデントの初期値だけ違います。
 
-- beautify : Boolean (true) - HTMLの整形を行う・行わない
+- beautify : Boolean (false) - HTMLの整形を行う・行わない
 - indent_size : Integer (1)
 - indent_char : String ("\t")
 - max_char : Integer (250)
