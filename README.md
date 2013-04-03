@@ -1,8 +1,6 @@
 
 # Modullatte
 
-version 1.0.1
-
 ## これはなに
 
 Dreamweaverのライブラリ機能に似た挙動をする、node.jsベースのHTMLのモジュールツールです。
