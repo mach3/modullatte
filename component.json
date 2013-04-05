@@ -1,6 +1,6 @@
 {
 	"name" : "modullatte",
-	"version" : "1.0.2",
+	"version" : "1.0.3",
 	"main" : [
 		"tasks/modullatte.js",
 		"lib/modullatte.js"

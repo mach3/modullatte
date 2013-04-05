@@ -5,10 +5,11 @@
  */
 module.exports = function(grunt){
 
-	var modullatte, fs;
+	var modullatte, fs, path;
 
 	modullatte = require("../lib/modullatte");
 	fs = require("fs");
+	path = require("path");
 
 	grunt.registerMultiTask(
 		"modullatte",
@@ -19,6 +20,10 @@ module.exports = function(grunt){
 			done = this.async();
 			data = this.data;
 			options = this.options({
+				verbose : true,
+				ignore : true,
+				ignore_names : ["^_"],
+
 				beautify : false,
 				indent_size : 1,
 				indent_char : "\t",
@@ -27,12 +32,51 @@ module.exports = function(grunt){
 				indent_scripts : "normal"
 			});
 
-			grunt.file.expand(data.src).forEach(function(path){
-				var html;
+			if(typeof options.ignore_names === "string"){
+				options.ignore_names = [options.ignore];
+			}
 
-				html = modullatte.build(path, options);
-				fs.writeFileSync(path, html);
-				grunt.log.writeln("[modulatte] : " + path);
+			grunt.file.expand(data.src).forEach(function(file){
+				var ignore, ins, log;
+
+				ignore = false;
+				ins = modullatte.create(file, options);
+				log = function(file, message, error){
+					var method;
+
+					if(options.verbose){
+						method = error ? "error" : "writeln";
+						grunt.log[method]( message + "(" + file + ")");
+					}
+				};
+
+				if(options.ignore){
+					options.ignore_names.forEach(function(value, index){
+						if(path.basename(file).match(value)){
+							ignore = true;
+						}
+					});
+				}
+
+
+				if(! ignore){
+					ins.validate(function(e, m){
+						var html;
+
+						if(e === null){
+							html = ins.build();
+							if(html){
+								fs.writeFileSync(file, html);
+								log(file, "Modules inserted.");
+							} else {
+								log(file, "Something goes wrong.", true);
+							}
+						} else if(e.type === "invalid") {
+							log(file, e.message, true);
+						}
+					});
+				}
+
 			});
 
 			done();

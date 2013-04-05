@@ -66,7 +66,7 @@ index.htmlに対してModullatteを実行すると、次のように展開され
 モジュールを編集したら、再度Modullatteを実行すればHTMLが更新されます。
 
 
-## Gruntタスクの例
+## Gruntタスク
 
 ```javascript
 grunt.loadNpmTasks("modullatte");
@@ -74,8 +74,9 @@ grunt.loadNpmTasks("modullatte");
 grunt.initConfig({
 	modullatte : {
 		options : {
-			indent_size : 4,
-			indent_char : " "
+			verbose : true,
+			ignore : true,
+			ignore_names : ["^_"]
 		},
 		dist : {
 			src : [
@@ -88,14 +89,19 @@ grunt.initConfig({
 
 尚、該当のファイルをそのまま上書きしますのでご注意ください。
 複製したファイルを扱うか、事前のバックアップをお勧めします。
-（不具合によりファイルが破損しても責任は負いかねます）
+（modullatteを使用する事によりファイルが破損しても一切責任は負いかねます）
 
-## オプション
 
-"beautify" 以外の全てのオプションは [js-beautify](https://github.com/einars/js-beautify) のbeautify-html.jsへ渡す為のオプションです。
+### オプション
+
+- beautify : Boolean (false) - js_beautifyを使用してHTMLの整形を行う・行わない
+- verbose : Boolean (true) - 詳細ログを出力する
+- ignore : Boolean (true) - ignore_names にマッチするファイルを無視する
+- ignore_names : Array|String (["^_"]) - 無視するファイル名のパターンを指定する
+
+上記以外のオプションは [js-beautify](https://github.com/einars/js-beautify) のbeautify-html.jsへ渡す為のオプションです。
 個人的な好みにより、インデントの初期値だけ違います。
 
-- beautify : Boolean (false) - HTMLの整形を行う・行わない
 - indent_size : Integer (1)
 - indent_char : String ("\t")
 - max_char : Integer (250)
@@ -107,14 +113,36 @@ grunt.initConfig({
 ライブラリを利用して使う場合はファイルの上書きは行われません。
 変わりに、生成した結果のHTML文字列が返されます。
 
+### buildメソッドを使用する
+
+build() メソッドで結果を返します。
+
 ```javascript
 var modullatte = require("modullatte");
 
-var result = modullatte.build("./the/path/to/file.html", {
-	indent_size : 4,
-	indent_char : " "
+var result = modullatte.build("./the/path/to/file.html", { /* options */ });
+```
+
+### インスタンスを使用する
+
+create() でインスタンスを返します。validate() ではmodullatteのタグが正常かどうかを検証し、
+build() で結果が返ります。
+
+```javascript
+var modullatte = require("modullatte");
+
+var instance = modullatte.create("./the/path/to/file.html", { /* options */ });
+modullatte.validate(function(error, instance){
+	if(! error){
+		console.log(instance.build());
+	}
 });
 ```
+
+オプションは、前項の物のうち、下記の物を指定出来ます。  
+beautify, indent_size, indent_char, max_char, brace_style, indent_scripts
+
+
 
 ## 作者
 
